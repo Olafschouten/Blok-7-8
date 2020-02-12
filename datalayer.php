@@ -25,15 +25,41 @@ function getAllTasks()
     return $result;
 }
 
+function getAllLists()
+{
+    $conn = dbConnect();
+    $query = $conn->prepare("SELECT * FROM `lists`");
+    $query->execute();
+    $result = $query->fetchAll();
+    $conn = null;
+    return $result;
+}
+
 function TaskInsert($data)
 {
     $conn = dbConnect();
-    $query = $conn->prepare("INSERT INTO `task` (task_name, description, status) VALUES (:task_name, :description, :status)");
+    $query = $conn->prepare("INSERT INTO `task` (task_name, status) VALUES (:task_name, :status)");
     $query->execute($data);
     $conn = null;
 }
 
-function delete($id)
+function ListInsert($data)
+{
+    $conn = dbConnect();
+    $query = $conn->prepare("INSERT INTO `lists` (list_name) VALUES (:list_name)");
+    $query->execute($data);
+    $conn = null;
+}
+
+function ListDelete($id)
+{
+    $conn = dbConnect();
+    $query = $conn->prepare("DELETE FROM `lists` WHERE id = :id");
+    $query->execute([':id' => $id]);
+    $conn = null;
+}
+
+function TaskDelete($id)
 {
     $conn = dbConnect();
     $query = $conn->prepare("DELETE FROM `task` WHERE id = :id");

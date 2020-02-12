@@ -6,6 +6,8 @@
 
 // Als er iets in de key url zit van $_GET, wordt de code uitgevoerd
 if (isset($_GET['url'])) {
+    $redirect_to = 'http://todo.localhost';
+
     // Met trim haal je de zwevende shlashes weg. Bijvoorbeeld:
     // /Students/Edit/1/ wordt Students/Edit/1
 
@@ -25,9 +27,10 @@ if (isset($_GET['url'])) {
 
     $url['controller'] = isset($tmp_url[0]) ? ucwords($tmp_url[0]) : null;
     $url['action'] = isset($tmp_url[1]) ? $tmp_url[1] : 'index';
+    $url['id'] = isset($tmp_url[2]) ? $tmp_url[2] : 'index';
 
     // Die twee waarden worden uit de array gehaald
-    unset($tmp_url[0], $tmp_url[1]);
+    unset($tmp_url[0], $tmp_url[1], $tmp_url[2]);
 
     // De overige variabelen worden in de key params gestopt
 
@@ -38,7 +41,24 @@ if (isset($_GET['url'])) {
         require 'datalayer.php';
         TaskInsert($_POST);
         // redirect naar overzicht pagina met lijst van alle tasks
-        $redirect_to = 'http://todo.localhost';
+        header('Location: ' . $redirect_to);
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $url['controller'] == 'List' && $url['action'] = 'add') {
+        require 'datalayer.php';
+        ListInsert($_POST);
+        header('Location: ' . $redirect_to);
+    }
+
+    if ($url['controller'] == 'Task' && $url['action'] = 'delete') {
+        require 'datalayer.php';
+        TaskDelete($url['id']);
+        header('Location: ' . $redirect_to);
+    }
+
+    if ($url['controller'] == 'List' && $url['action'] = 'delete') {
+        require 'datalayer.php';
+        ListDelete($url['id']);
         header('Location: ' . $redirect_to);
     }
 
