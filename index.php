@@ -12,21 +12,27 @@
     <div class="w-75 bg-white p-4">
         <h1>Add list and task</h1>
         <form method="post" action="route.php?url=list/add">
-            <label class="p-3">
-                <input class="m-1" name="list_name" type="text" placeholder="List name" required>
+            <label>
+                <p>List name: <input name="list_name" type="text" placeholder="List name" required></p>
             </label>
             <input type="submit" value="Add"/>
         </form>
 
         <form method="post" action="route.php?url=task/add">
-            <label class="p-3">
-                <input class="m-1" name="task_name" type="text" placeholder="Task name" required>
+            <label>
+                <p>Task name: <input name="task_name" type="text" placeholder="Task name" required></p>
                 <br>
-                <select class="m-1" name="status" required>
-                    <option value="open">Open</option>
-                    <option value="closed">Closed</option>
-                </select>
-                <!--                value="--><? //= $_POST['task_name'] ?><!--"-->
+                <p>Status: <select name="status" required>
+                        <option value="open">Open</option>
+                        <option value="closed">Closed</option>
+                    </select></p>
+                <?php require "datalayer.php";
+                $lists = GetAllLists(); ?>
+                <p>In list: <select name="status" required>
+                        <?php foreach ($lists as $list) { ?>
+                            <option value="<?php echo $list['list_name']; ?>"><?php echo $list['list_name']; ?></option>
+                        <?php } ?>
+                    </select></p>
             </label>
             <input type="submit" value="Add"/>
         </form>
@@ -44,26 +50,23 @@
                     <th scope="col">Edit</th>
                     <th scope="col">Delete</th>
                 </tr>
-                <?php
-                require "datalayer.php";
-                $tasks = getAllTasks();
+                <?php $tasks = getAllTasks();
 
                 if (!empty($tasks)) {
-                    foreach ($tasks as $task) {
-                        ?>
-                        <tbody>
-                        <tr>
-                            <th scope="row"><?= $task['id'] ?></th>
-                            <td><?= $task['task_name'] ?></td>
-                            <td><?= $task['status'] ?></td>
-                            <td><a type="button" href="id=<?= $task['id'] ?>">Edit</a></td>
-                            <td><a type="button" href="route.php?url=task/task/<?= $task['id'] ?>">Delete</a></td>
-                        </tr>
-                        </tbody>
-                        <?php
-                    }
-                } else {
-                    ?>
+                foreach ($tasks
+
+                as $task) { ?>
+                <tbody>
+                <tr>
+                    <th scope="row"><?= $task['id'] ?></th>
+                    <td><?= $task['task_name'] ?></td>
+                    <td><?= $task['status'] ?></td>
+                    <td><a type="button" href="id=<?= $task['id'] ?>">Edit</a></td>
+                    <td><a type="button" href="route.php?url=task/task/<?= $task['id'] ?>">Delete</a></td>
+                </tr>
+                </tbody>
+                <?php }
+                } else { ?>
                     <tbody>
                     <tr>
                         <th scope="col"></th>
@@ -71,9 +74,7 @@
                         <th scope="col">None</th>
                     </tr>
                     </tbody>
-                    <?php
-                }
-                ?>
+                <?php } ?>
                 </thead>
             </table>
 
@@ -86,16 +87,12 @@
                     <th scope="col">Edit</th>
                     <th scope="col">Delete</th>
                 </tr>
-                <?php
-                $lists = getAllLists();
-
+                <?php $lists = getAllLists();
 
                 if (!empty($lists)) {
                 foreach ($lists
 
-                as $list) {
-                //                echo $list['list_name'];
-                ?>
+                as $list) { ?>
                 <tbody>
                 <tr>
                     <th scope="row"><?= $list['id'] ?></th>
@@ -106,17 +103,13 @@
                 </tr>
                 </tbody>
 
-                <?php
-                }
-                }
-                ?>
+                <?php }
+                } ?>
                 </thead>
             </table>
         </div>
     </div>
 </div>
-
-<button type="button">remove</button>
 
 </body>
 </html>

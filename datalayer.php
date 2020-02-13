@@ -66,3 +66,19 @@ function TaskDelete($id)
     $query->execute([':id' => $id]);
     $conn = null;
 }
+
+function ListEdit($id)
+{
+    $conn = dbConnect();
+    $query = $conn->prepare("DELETE FROM `lists` WHERE id = :id");
+    $query->execute([':id' => $id]);
+    $conn = null;
+}
+
+function TaskEdit($id)
+{
+    $conn = dbConnect();
+    $query = $conn->prepare("DELETE FROM `lists` WHERE id = :id");
+    $query->execute([':id' => $id]);
+    $conn = null;
+}
