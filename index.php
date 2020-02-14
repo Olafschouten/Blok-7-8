@@ -28,9 +28,9 @@
                     </select></p>
                 <?php require "datalayer.php";
                 $lists = GetAllLists(); ?>
-                <p>In list: <select name="status" required>
+                <p>In list: <select name="list_id" required>
                         <?php foreach ($lists as $list) { ?>
-                            <option value="<?php echo $list['list_name']; ?>"><?php echo $list['list_name']; ?></option>
+                            <option value="<?php echo $list['id']; ?>"><?php echo $list['list_name']; ?></option>
                         <?php } ?>
                     </select></p>
             </label>
@@ -45,6 +45,7 @@
                 <thead>
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">List</th>
                     <th scope="col">Task</th>
                     <th scope="col">Status</th>
                     <th scope="col">Edit</th>
@@ -59,9 +60,10 @@
                 <tbody>
                 <tr>
                     <th scope="row"><?= $task['id'] ?></th>
+                    <td><?= $task['list_name'] ?></td>
                     <td><?= $task['task_name'] ?></td>
                     <td><?= $task['status'] ?></td>
-                    <td><a type="button" href="id=<?= $task['id'] ?>">Edit</a></td>
+                    <td><a type="button" href="edit.php?id=<?= $task['id'] ?>">Edit</a></td>
                     <td><a type="button" href="route.php?url=task/task/<?= $task['id'] ?>">Delete</a></td>
                 </tr>
                 </tbody>
@@ -70,6 +72,8 @@
                     <tbody>
                     <tr>
                         <th scope="col"></th>
+                        <th scope="col">None</th>
+                        <th scope="col">None</th>
                         <th scope="col">None</th>
                         <th scope="col">None</th>
                     </tr>

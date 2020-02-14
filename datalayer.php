@@ -18,7 +18,10 @@ function dbConnect()
 function getAllTasks()
 {
     $conn = dbConnect();
-    $query = $conn->prepare("SELECT * FROM `task`");
+    $query = $conn->prepare("
+SELECT task.list_id, lists.list_name, task.task_name, task.status, task.id
+FROM task
+INNER JOIN lists ON task.list_id = lists.id");
     $query->execute();
     $result = $query->fetchAll();
     $conn = null;
@@ -28,7 +31,9 @@ function getAllTasks()
 function getAllLists()
 {
     $conn = dbConnect();
-    $query = $conn->prepare("SELECT * FROM `lists`");
+    $query = $conn->prepare("
+SELECT * 
+FROM `lists`");
     $query->execute();
     $result = $query->fetchAll();
     $conn = null;
@@ -38,7 +43,10 @@ function getAllLists()
 function TaskInsert($data)
 {
     $conn = dbConnect();
-    $query = $conn->prepare("INSERT INTO `task` (task_name, status) VALUES (:task_name, :status)");
+    $query = $conn->prepare("
+INSERT INTO `task` (task_name, status, list_id) 
+VALUES (:task_name, :status, :list_id)");
+//    '".implode("','", $data)."'
     $query->execute($data);
     $conn = null;
 }
@@ -46,7 +54,9 @@ function TaskInsert($data)
 function ListInsert($data)
 {
     $conn = dbConnect();
-    $query = $conn->prepare("INSERT INTO `lists` (list_name) VALUES (:list_name)");
+    $query = $conn->prepare("
+INSERT INTO `lists` (list_name) 
+VALUES (:list_name)");
     $query->execute($data);
     $conn = null;
 }
@@ -54,7 +64,9 @@ function ListInsert($data)
 function ListDelete($id)
 {
     $conn = dbConnect();
-    $query = $conn->prepare("DELETE FROM `lists` WHERE id = :id");
+    $query = $conn->prepare("
+DELETE FROM `lists` 
+WHERE id = :id");
     $query->execute([':id' => $id]);
     $conn = null;
 }
@@ -62,23 +74,51 @@ function ListDelete($id)
 function TaskDelete($id)
 {
     $conn = dbConnect();
-    $query = $conn->prepare("DELETE FROM `task` WHERE id = :id");
+    $query = $conn->prepare("
+DELETE FROM `task` 
+WHERE id = :id");
     $query->execute([':id' => $id]);
     $conn = null;
 }
 
-function ListEdit($id)
+function GetList($id)
 {
     $conn = dbConnect();
-    $query = $conn->prepare("DELETE FROM `lists` WHERE id = :id");
+    $query = $conn->prepare('
+SELECT * FROM `lists` WHERE `id` = :id');
     $query->execute([':id' => $id]);
     $conn = null;
 }
 
-function TaskEdit($id)
+function GetTask($id)
 {
     $conn = dbConnect();
-    $query = $conn->prepare("DELETE FROM `lists` WHERE id = :id");
+    $query = $conn->prepare('
+SELECT * FROM task WHERE id = :id');
+    $query->execute([':id' => $id]);
+    $result = $query->fetchAll();
+    $conn = null;
+    return $result;
+}
+
+function ListUpdate($id)
+{
+    $conn = dbConnect();
+    $query = $conn->prepare('
+UPDATE `lists` 
+SET list_name = :list_name 
+WHERE id=:id');
+    $query->execute([':id' => $id]);
+    $conn = null;
+}
+
+function TaskUpdate($id)
+{
+    $conn = dbConnect();
+    $query = $conn->prepare('
+UPDATE `task` 
+SET task_name = :task_name 
+WHERE id=:id');
     $query->execute([':id' => $id]);
     $conn = null;
 }

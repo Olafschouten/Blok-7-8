@@ -36,36 +36,29 @@ if (isset($_GET['url'])) {
 
     $url['params'] = array_values($tmp_url);
 
+    require 'datalayer.php';
+
     // bepaal welk bestand er geladen moet worden, en roep de gevraagde functie aan
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && $url['controller'] == 'Task' && $url['action'] = 'add') {
-        require 'datalayer.php';
         TaskInsert($_POST);
         // redirect naar overzicht pagina met lijst van alle tasks
         header('Location: ' . $redirect_to);
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && $url['controller'] == 'List' && $url['action'] = 'add') {
-        require 'datalayer.php';
         ListInsert($_POST);
         header('Location: ' . $redirect_to);
     }
 
     if ($url['controller'] == 'Task' && $url['action'] = 'delete') {
-        require 'datalayer.php';
         TaskDelete($url['id']);
         header('Location: ' . $redirect_to);
     }
 
     if ($url['controller'] == 'List' && $url['action'] = 'delete') {
-        require 'datalayer.php';
         ListDelete($url['id']);
         header('Location: ' . $redirect_to);
     }
-
-    if ($_SERVER['REQUEST_METHOD'] === 'GET' && $url['controller'] == 'Task' && $url['action'] = 'add') {
-        // toon leeg invulformulier
-    }
-
 }
 
 
