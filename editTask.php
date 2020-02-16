@@ -10,21 +10,14 @@
 <body class="bg-dark">
 <div class="d-flex justify-content-center">
     <div class="w-75 bg-white p-4">
-        <h1>Add list and task</h1>
-        <form method="post" action="route.php?url=list/add">
+        <h1>Edit task</h1>
+        <form method="post" action="route.php?url=task/update">
             <?php require "datalayer.php";
             $id = $_GET['id'];
             $task = GetTask($id);
             ?>
             <label>
-                <p>List name: <input name="list_name" type="text" value="<?= $task[0]['task_name'] ?>" required></p>
-            </label>
-            <input type="submit" value="Add"/>
-        </form>
-
-        <form method="post" action="route.php?url=task/update">
-            <label>
-                <p>Task name: <input name="task_name" type="text" placeholder="Task name" required></p>
+                <p>Task name: <input name="task_name" type="text" value="<?= $task[0]['task_name'] ?>" required></p>
                 <br>
                 <p>Status: <select name="status" required>
                         <option value="open">Open</option>
@@ -37,7 +30,7 @@
                         <?php } ?>
                     </select></p>
             </label>
-            <input type="submit" value="Add"/>
+            <input type="submit" value="Edit"/>
         </form>
     </div>
 </div>

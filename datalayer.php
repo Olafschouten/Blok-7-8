@@ -87,7 +87,9 @@ function GetList($id)
     $query = $conn->prepare('
 SELECT * FROM `lists` WHERE `id` = :id');
     $query->execute([':id' => $id]);
+    $result = $query->fetchAll();
     $conn = null;
+    return $result;
 }
 
 function GetTask($id)

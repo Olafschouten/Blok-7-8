@@ -63,7 +63,7 @@
                     <td><?= $task['list_name'] ?></td>
                     <td><?= $task['task_name'] ?></td>
                     <td><?= $task['status'] ?></td>
-                    <td><a type="button" href="edit.php?id=<?= $task['id'] ?>">Edit</a></td>
+                    <td><a type="button" href="editTask.php?id=<?= $task['id'] ?>">Edit</a></td>
                     <td><a type="button" href="route.php?url=task/task/<?= $task['id'] ?>">Delete</a></td>
                 </tr>
                 </tbody>
@@ -102,7 +102,7 @@
                     <th scope="row"><?= $list['id'] ?></th>
                     <td><?= $list['list_name'] ?></td>
                     <td></td>
-                    <td><a type="button" href="id=<?= $list['id'] ?>">Edit</a></td>
+                    <td><a type="button" href="editList.php?id=<?= $list['id'] ?>">Edit</a></td>
                     <td><a type="button" href="route.php?url=list/delete/<?= $list['id'] ?>">Delete</a></td>
                 </tr>
                 </tbody>

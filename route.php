@@ -59,6 +59,16 @@ if (isset($_GET['url'])) {
         ListDelete($url['id']);
         header('Location: ' . $redirect_to);
     }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $url['controller'] == 'List' && $url['action'] = 'edit') {
+        ListUpdate($url['id'], $_POST);
+        header('Location: ' . $redirect_to);
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $url['controller'] == 'Task' && $url['action'] = 'edit') {
+        TaskUpdate($url['id']);
+        header('Location: ' . $redirect_to);
+    }
 }
 
 
