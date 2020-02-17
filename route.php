@@ -80,25 +80,25 @@ if (isset($_GET['url'])) {
 
     // ----------------- Delete -----------------
 
-    if ($url['controller'] == 'Task' && $url['action'] == 'delete') {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET' && $url['controller'] == 'Task' && $url['action'] == 'Delete' && isset($url['id']) ) {
         TaskDelete($url['id']);
         header('Location: ' . $redirect_to);
     }
 
-    if ($url['controller'] == 'List' && $url['action'] == 'delete') {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET' && $url['controller'] == 'List' && $url['action'] == 'Delete' && isset($url['id']) ) {
         ListDelete($url['id']);
         header('Location: ' . $redirect_to);
     }
 
     // ----------------- Update -----------------
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $url['controller'] == 'Task' && $url['action'] == 'update') {
-        TaskUpdate($url['id']);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $url['controller'] == 'Task' && $url['action'] == 'Update') {
+        TaskUpdate($_POST);
         header('Location: ' . $redirect_to);
     }
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $url['controller'] == 'List' && $url['action'] == 'update') {
-        ListUpdate($url['id']);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $url['controller'] == 'List' && $url['action'] == 'Update') {
+        ListUpdate($_POST);
         header('Location: ' . $redirect_to);
     }
 }

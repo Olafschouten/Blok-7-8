@@ -21,10 +21,10 @@ function getAllTasks()
 {
     $conn = dbConnect();
     $query = $conn->prepare("
-SELECT task.lists_id, lists.list_name, task.task_name, task.status, task.id
+SELECT task.list_id, lists.list_name, task.task_name, task.status, task.id
 FROM task
 INNER JOIN lists
-ON task.lists_id = lists.id");
+ON task.list_id = lists.id");
     $query->execute();
     $conn = null;
     return $query->fetchAll();
@@ -93,8 +93,8 @@ function GetList($id)
 {
     $conn = dbConnect();
     $query = $conn->prepare('
-SELECT * FROM lists WHERE `id` = :id
-');
+SELECT * FROM lists
+WHERE `id` = :id');
     $query->execute([':id' => $id]);
     $result = $query->fetch();
     $conn = null;
@@ -105,34 +105,35 @@ function GetTask($id)
 {
     $conn = dbConnect();
     $query = $conn->prepare('
-SELECT * FROM task WHERE id = :id');
+SELECT * FROM task
+WHERE id = :id');
     $query->execute([':id' => $id]);
-    $result = $query->fetchAll();
+    $result = $query->fetch();
     $conn = null;
     return $result;
 }
 
 // ----------------- Update -----------------
 
-function ListUpdate($id)
+function ListUpdate($data)
 {
     $conn = dbConnect();
     $query = $conn->prepare('
 UPDATE lists 
 SET list_name = :list_name 
 WHERE id=:id');
-    $query->execute([':id' => $id]);
+    $query->execute([':list_name' => $data['list_name'], ':id' => $data['id']]);
     $conn = null;
 }
 
-function TaskUpdate($id)
+function TaskUpdate($data)
 {
     $conn = dbConnect();
     $query = $conn->prepare('
 UPDATE task 
-SET task_name = :task_name 
+SET task_name = :task_name
 WHERE id=:id');
-    $query->execute([':id' => $id]);
+    $query->execute([':task_name' => $data['task_name'], ':id' => $data['id']]);
     $conn = null;
 }
 

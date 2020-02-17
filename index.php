@@ -52,7 +52,6 @@
                     <th scope="col">Delete</th>
                 </tr>
                 <?php $tasks = getAllTasks();
-//                var_dump($tasks);
                 if (!empty($tasks)) {
                 foreach ($tasks
 
@@ -63,8 +62,8 @@
                     <td><?= $task['list_name'] ?></td>
                     <td><?= $task['task_name'] ?></td>
                     <td><?= $task['status'] ?></td>
-                    <td><a type="button" href="editTask.php?id=<?= $task['id'] ?>">Edit</a></td>
-                    <td><a type="button" href="route.php?url=task/task/<?= $task['id'] ?>">Delete</a></td>
+                    <td><a type="button" href="route.php?url=Task/Edit/<?= $task['id'] ?>">Edit</a></td>
+                    <td><a type="button" href="route.php?url=Task/Delete/<?= $task['id'] ?>">Delete</a></td>
                 </tr>
                 </tbody>
                 <?php }
@@ -82,24 +81,21 @@
                 </thead>
             </table>
 
-            <hr>
-
-            <?php
-            foreach ($lists as $list) {
-                ?>
-                <button class="accordion"><?= $list['list_name'] ?></button>
+            <h1>Lists</h1>
+            <?php foreach ($lists as $list) { ?>
+                <hr>
+                <button class="accordion"><?= $list['list_name'] ?>
+                    <a type="button" href="route.php?url=List/Edit/<?= $list['id'] ?>">Edit</a>
+                    <a type="button" href="route.php?url=List/Delete/<?= $list['id'] ?>">Delete</a></button>
                 <div class="panel" style="display: none">
                     <?php
 
-                    $test = GetTaskFromList($list['id']);
-                    var_dump($test);
+                    //                    $test = GetTaskFromList($list['id']);
+                    //                    var_dump($test);
                     ?>
                 </div>
 
-                <hr>
-                <?php
-            }
-            ?>
+            <?php } ?>
 
             <script>
                 var acc = document.getElementsByClassName("accordion");
@@ -117,37 +113,6 @@
                     });
                 }
             </script>
-
-            <h1>Lists</h1>
-            <table class="table table-striped table-dark">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Lists</th>
-                    <th></th>
-                    <th scope="col">Edit</th>
-                    <th scope="col">Delete</th>
-                </tr>
-                <?php $lists = getAllLists();
-
-                if (!empty($lists)) {
-                foreach ($lists
-
-                as $list) { ?>
-                <tbody>
-                <tr>
-                    <th scope="row"><?= $list['id'] ?></th>
-                    <td><?= $list['list_name'] ?></td>
-                    <td></td>
-                    <td><a type="button" href="editList.php?id=<?= $list['id'] ?>">Edit</a></td>
-                    <td><a type="button" href="route.php?url=list/delete/<?= $list['id'] ?>">Delete</a></td>
-                </tr>
-                </tbody>
-
-                <?php }
-                } ?>
-                </thead>
-            </table>
         </div>
     </div>
 </div>
