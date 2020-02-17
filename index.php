@@ -40,7 +40,7 @@
         <hr>
 
         <div class="p-3">
-            <h1>Tasks list</h1>
+            <h1>Tasks</h1>
             <table class="table table-striped table-dark">
                 <thead>
                 <tr>
@@ -82,34 +82,74 @@
                 </thead>
             </table>
 
-            <table class="table table-striped table-dark">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Lists</th>
-                    <th></th>
-                    <th scope="col">Edit</th>
-                    <th scope="col">Delete</th>
-                </tr>
-                <?php $lists = getAllLists();
+            <hr>
 
-                if (!empty($lists)) {
-                foreach ($lists
+            <?php
+            foreach ($lists as $list) {
+                ?>
+                <button class="accordion"><?= $list['list_name'] ?></button>
+                <div class="panel" style="display: none">
+                    <?php
 
-                as $list) { ?>
-                <tbody>
-                <tr>
-                    <th scope="row"><?= $list['id'] ?></th>
-                    <td><?= $list['list_name'] ?></td>
-                    <td></td>
-                    <td><a type="button" href="editList.php?id=<?= $list['id'] ?>">Edit</a></td>
-                    <td><a type="button" href="route.php?url=list/delete/<?= $list['id'] ?>">Delete</a></td>
-                </tr>
-                </tbody>
+                    foreach ($tasks as $task) {
 
-                <?php }
-                } ?>
-                </thead>
+                    }
+                    ?>
+                </div>
+
+                <hr>
+                <?php
+            }
+            ?>
+
+            <script>
+                var acc = document.getElementsByClassName("accordion");
+                var i;
+
+                for (i = 0; i < acc.length; i++) {
+                    acc[i].addEventListener("click", function () {
+                        this.classList.toggle("active");
+                        var panel = this.nextElementSibling;
+                        if (panel.style.display === "block") {
+                            panel.style.display = "none";
+                        } else {
+                            panel.style.display = "block";
+                        }
+                    });
+                }
+            </script>
+
+            <!--            <h1>Lists</h1>-->
+            <!--            <table class="table table-striped table-dark">-->
+            <!--                <thead>-->
+            <!--                <tr>-->
+            <!--                    <th scope="col">#</th>-->
+            <!--                    <th scope="col">Lists</th>-->
+            <!--                    <th></th>-->
+            <!--                    <th scope="col">Edit</th>-->
+            <!--                    <th scope="col">Delete</th>-->
+            <!--                </tr>-->
+            <!--                --><?php //$lists = getAllLists();
+            //
+            //                if (!empty($lists)) {
+            //                foreach ($lists
+            //
+            //                as $list) { ?>
+            <!--                <tbody>-->
+            <!--                <tr>-->
+            <!--                    <th scope="row">--><? //= $list['id'] ?><!--</th>-->
+            <!--                    <td>--><? //= $list['list_name'] ?><!--</td>-->
+            <!--                    <td></td>-->
+            <!--                    <td><a type="button" href="editList.php?id=-->
+            <? //= $list['id'] ?><!--">Edit</a></td>-->
+            <!--                    <td><a type="button" href="route.php?url=list/delete/-->
+            <? //= $list['id'] ?><!--">Delete</a></td>-->
+            <!--                </tr>-->
+            <!--                </tbody>-->
+
+            <!--                --><?php //}
+            //                } ?>
+            </thead>
             </table>
         </div>
     </div>

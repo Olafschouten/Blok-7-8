@@ -38,6 +38,19 @@ if (isset($_GET['url'])) {
 
     require 'datalayer.php';
 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $url['controller'] == 'List' && $url['action'] = 'update') {
+        echo 'update';
+        die();
+
+//        ListUpdate($url['id']);
+//        header('Location: ' . $redirect_to);
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $url['controller'] == 'Task' && $url['action'] = 'update') {
+        TaskUpdate($url['id']);
+        header('Location: ' . $redirect_to);
+    }
+
     // bepaal welk bestand er geladen moet worden, en roep de gevraagde functie aan
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && $url['controller'] == 'Task' && $url['action'] = 'add') {
         TaskInsert($_POST);
@@ -46,6 +59,9 @@ if (isset($_GET['url'])) {
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && $url['controller'] == 'List' && $url['action'] = 'add') {
+        echo 'insert';
+        die();
+
         ListInsert($_POST);
         header('Location: ' . $redirect_to);
     }
@@ -57,16 +73,6 @@ if (isset($_GET['url'])) {
 
     if ($url['controller'] == 'List' && $url['action'] = 'delete') {
         ListDelete($url['id']);
-        header('Location: ' . $redirect_to);
-    }
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $url['controller'] == 'List' && $url['action'] = 'edit') {
-        ListUpdate($url['id'], $_POST);
-        header('Location: ' . $redirect_to);
-    }
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $url['controller'] == 'Task' && $url['action'] = 'edit') {
-        TaskUpdate($url['id']);
         header('Location: ' . $redirect_to);
     }
 }
