@@ -26,9 +26,8 @@ FROM task
 INNER JOIN lists
 ON task.lists_id = lists.id");
     $query->execute();
-    $result = $query->fetchAll();
     $conn = null;
-    return $result;
+    return $query->fetchAll();
 }
 
 function getAllLists()
@@ -94,9 +93,10 @@ function GetList($id)
 {
     $conn = dbConnect();
     $query = $conn->prepare('
-SELECT * FROM lists WHERE `id` = :id');
+SELECT * FROM lists WHERE `id` = :id
+');
     $query->execute([':id' => $id]);
-    $result = $query->fetchAll();
+    $result = $query->fetch();
     $conn = null;
     return $result;
 }
@@ -138,7 +138,7 @@ WHERE id=:id');
 
 // ----------------- Get specific tasks -----------------
 
-function GetTaskFormList($id)
+function GetTaskFromList($id)
 {
     $conn = dbConnect();
     $query = $conn->prepare('
@@ -147,4 +147,5 @@ FROM task
 WHERE lists_id=:lists_id');
     $query->execute([':lists_id' => $id]);
     $conn = null;
+    return $query->fetchAll();
 }

@@ -52,7 +52,7 @@
                     <th scope="col">Delete</th>
                 </tr>
                 <?php $tasks = getAllTasks();
-
+//                var_dump($tasks);
                 if (!empty($tasks)) {
                 foreach ($tasks
 
@@ -91,9 +91,8 @@
                 <div class="panel" style="display: none">
                     <?php
 
-                    foreach ($tasks as $task) {
-
-                    }
+                    $test = GetTaskFromList($list['id']);
+                    var_dump($test);
                     ?>
                 </div>
 
@@ -119,37 +118,35 @@
                 }
             </script>
 
-            <!--            <h1>Lists</h1>-->
-            <!--            <table class="table table-striped table-dark">-->
-            <!--                <thead>-->
-            <!--                <tr>-->
-            <!--                    <th scope="col">#</th>-->
-            <!--                    <th scope="col">Lists</th>-->
-            <!--                    <th></th>-->
-            <!--                    <th scope="col">Edit</th>-->
-            <!--                    <th scope="col">Delete</th>-->
-            <!--                </tr>-->
-            <!--                --><?php //$lists = getAllLists();
-            //
-            //                if (!empty($lists)) {
-            //                foreach ($lists
-            //
-            //                as $list) { ?>
-            <!--                <tbody>-->
-            <!--                <tr>-->
-            <!--                    <th scope="row">--><? //= $list['id'] ?><!--</th>-->
-            <!--                    <td>--><? //= $list['list_name'] ?><!--</td>-->
-            <!--                    <td></td>-->
-            <!--                    <td><a type="button" href="editList.php?id=-->
-            <? //= $list['id'] ?><!--">Edit</a></td>-->
-            <!--                    <td><a type="button" href="route.php?url=list/delete/-->
-            <? //= $list['id'] ?><!--">Delete</a></td>-->
-            <!--                </tr>-->
-            <!--                </tbody>-->
+            <h1>Lists</h1>
+            <table class="table table-striped table-dark">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Lists</th>
+                    <th></th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                <?php $lists = getAllLists();
 
-            <!--                --><?php //}
-            //                } ?>
-            </thead>
+                if (!empty($lists)) {
+                foreach ($lists
+
+                as $list) { ?>
+                <tbody>
+                <tr>
+                    <th scope="row"><?= $list['id'] ?></th>
+                    <td><?= $list['list_name'] ?></td>
+                    <td></td>
+                    <td><a type="button" href="editList.php?id=<?= $list['id'] ?>">Edit</a></td>
+                    <td><a type="button" href="route.php?url=list/delete/<?= $list['id'] ?>">Delete</a></td>
+                </tr>
+                </tbody>
+
+                <?php }
+                } ?>
+                </thead>
             </table>
         </div>
     </div>

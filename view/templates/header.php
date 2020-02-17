@@ -10,19 +10,4 @@
 <body class="bg-dark">
 <div class="d-flex justify-content-center">
 
-
-    <div class="w-75 bg-white p-4">
-        <h1>Edit list</h1>
-        <form method="post" action="route.php?url=list/update">
-            <label>
-                <p>List name: <input name="list_name" type="text" value="<?= $list[0]['list_name'] ?>" required></p>
-            </label>
-            <input type="submit" value="Edit"/>
-        </form>
-    </div>
-
-</div>
-
-</body>
-</html>
-
+<!-- header: the above comes from  /view/templates/header.php -->
