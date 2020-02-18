@@ -10,18 +10,19 @@
 <body class="bg-dark">
 <div class="d-flex justify-content-center">
     <div class="w-75 bg-white p-4">
-        <h1>Add list and task</h1>
-        <form method="post" action="route.php?url=list/add">
+        <h1>Add list or task</h1>
+        <form method="post" action="route.php?url=List/Add">
             <label>
                 <p>List name: <input name="list_name" type="text" placeholder="List name" required></p>
             </label>
             <input type="submit" value="Add"/>
         </form>
 
-        <form method="post" action="route.php?url=task/add">
+        <br>
+
+        <form method="post" action="route.php?url=Task/Add">
             <label>
                 <p>Task name: <input name="task_name" type="text" placeholder="Task name" required></p>
-                <br>
                 <p>Status: <select name="status" required>
                         <option value="open">Open</option>
                         <option value="closed">Closed</option>
@@ -41,46 +42,35 @@
 
         <div class="p-3">
             <h1>Tasks</h1>
-            <table class="table table-striped table-dark">
-                <thead>
+            <table id="myTable" class="table table-striped table-dark">
+
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">List</th>
-                    <th scope="col">Task</th>
-                    <th scope="col">Status</th>
+                    <th scope="col" onclick="sortTable(0)">List</th>
+                    <th scope="col" onclick="sortTable(1)">Task</th>
+                    <th scope="col" onclick="sortTable(2)">Status</th>
                     <th scope="col">Edit</th>
                     <th scope="col">Delete</th>
                 </tr>
                 <?php $tasks = getAllTasks();
                 if (!empty($tasks)) {
-                foreach ($tasks
-
-                as $task) { ?>
-                <tbody>
-                <tr>
-                    <th scope="row"><?= $task['id'] ?></th>
-                    <td><?= $task['list_name'] ?></td>
-                    <td><?= $task['task_name'] ?></td>
-                    <td><?= $task['status'] ?></td>
-                    <td><a type="button" href="route.php?url=Task/Edit/<?= $task['id'] ?>">Edit</a></td>
-                    <td><a type="button" href="route.php?url=Task/Delete/<?= $task['id'] ?>">Delete</a></td>
-                </tr>
-                </tbody>
-                <?php }
+                    foreach ($tasks as $task) { ?>
+                        <tr>
+                            <td><?= $task['list_name'] ?></td>
+                            <td><?= $task['task_name'] ?></td>
+                            <td><?= $task['status'] ?></td>
+                            <td><a type="button" href="route.php?url=Task/Edit/<?= $task['id'] ?>">Edit</a></td>
+                            <td><a type="button" href="route.php?url=Task/Delete/<?= $task['id'] ?>">Delete</a></td>
+                        </tr>
+                    <?php }
                 } else { ?>
-                    <tbody>
                     <tr>
-                        <th scope="col"></th>
                         <th scope="col">None</th>
                         <th scope="col">None</th>
                         <th scope="col">None</th>
                         <th scope="col">None</th>
                     </tr>
-                    </tbody>
                 <?php } ?>
-                </thead>
             </table>
-
             <h1>Lists</h1>
             <?php foreach ($lists as $list) { ?>
                 <hr>
@@ -90,13 +80,20 @@
                 <div class="panel" style="display: none">
                     <?php
 
-                    //                    $test = GetTaskFromList($list['id']);
-                    //                    var_dump($test);
+                    foreach ($tasks as $task) {
+                        if ($list['id'] === $task['list_id']) {
+                            ?>
+                            <p><?= $task['task_name']?> <a type="button" href="route.php?url=Task/Edit/<?= $task['id'] ?>">Edit</a>
+                            <a type="button" href="route.php?url=Task/Delete/<?= $task['id'] ?>">Delete</a></p>
+
+                            <?php
+                        }
+                    }
+                    //                                        $test = GetTaskFromList($list['id']);
+                    //                                        var_dump($test);
                     ?>
                 </div>
-
             <?php } ?>
-
             <script>
                 var acc = document.getElementsByClassName("accordion");
                 var i;
@@ -111,6 +108,61 @@
                             panel.style.display = "block";
                         }
                     });
+                }
+
+                function sortTable(n) {
+                    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+                    table = document.getElementById("myTable");
+                    switching = true;
+                    //Set the sorting direction to ascending:
+                    dir = "asc";
+                    /*Make a loop that will continue until
+                    no switching has been done:*/
+                    while (switching) {
+                        //start by saying: no switching is done:
+                        switching = false;
+                        rows = table.rows;
+                        /*Loop through all table rows (except the
+                        first, which contains table headers):*/
+                        for (i = 1; i < (rows.length - 1); i++) {
+                            //start by saying there should be no switching:
+                            shouldSwitch = false;
+                            /*Get the two elements you want to compare,
+                            one from current row and one from the next:*/
+                            x = rows[i].getElementsByTagName("TD")[n];
+                            y = rows[i + 1].getElementsByTagName("TD")[n];
+                            /*check if the two rows should switch place,
+                            based on the direction, asc or desc:*/
+                            if (dir == "asc") {
+                                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                                    //if so, mark as a switch and break the loop:
+                                    shouldSwitch = true;
+                                    break;
+                                }
+                            } else if (dir == "desc") {
+                                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                                    //if so, mark as a switch and break the loop:
+                                    shouldSwitch = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (shouldSwitch) {
+                            /*If a switch has been marked, make the switch
+                            and mark that a switch has been done:*/
+                            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                            switching = true;
+                            //Each time a switch is done, increase this count by 1:
+                            switchcount++;
+                        } else {
+                            /*If no switching has been done AND the direction is "asc",
+                            set the direction to "desc" and run the while loop again.*/
+                            if (switchcount == 0 && dir == "asc") {
+                                dir = "desc";
+                                switching = true;
+                            }
+                        }
+                    }
                 }
             </script>
         </div>

@@ -67,13 +67,13 @@ if (isset($_GET['url'])) {
     // ----------------- Add -----------------
 
     // bepaal welk bestand er geladen moet worden, en roep de gevraagde functie aan
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $url['controller'] == 'Task' && $url['action'] == 'add') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $url['controller'] == 'Task' && $url['action'] == 'Add') {
         TaskInsert($_POST);
         // redirect naar overzicht pagina met lijst van alle tasks
         header('Location: ' . $redirect_to);
     }
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $url['controller'] == 'List' && $url['action'] == 'add') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $url['controller'] == 'List' && $url['action'] == 'Add') {
         ListInsert($_POST);
         header('Location: ' . $redirect_to);
     }

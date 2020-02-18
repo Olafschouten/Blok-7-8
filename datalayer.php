@@ -131,7 +131,7 @@ function TaskUpdate($data)
     $conn = dbConnect();
     $query = $conn->prepare('
 UPDATE task 
-SET task_name = :task_name
+SET task_name = :task_name 
 WHERE id=:id');
     $query->execute([':task_name' => $data['task_name'], ':id' => $data['id']]);
     $conn = null;

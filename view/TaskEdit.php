@@ -4,6 +4,7 @@
     <h1>Edit task</h1>
     <form method="post" action="route.php?url=Task/Update">
         <label>
+            <input name="id" type="hidden" value="<?= $task['id'] ?>">
             <p>Task name: <input name="task_name" type="text" value="<?= $task['task_name'] ?>" required></p>
             <br>
             <p>Status: <select name="status" required>
