@@ -44,24 +44,24 @@ if (isset($_GET['url'])) {
 
     // ----------------- Edit -----------------
 
-    if ($_SERVER['REQUEST_METHOD'] === 'GET' && $url['controller'] == 'List' && $url['action'] == 'Edit' && isset($url['id']) ) {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET' && $url['controller'] == 'List' && $url['action'] == 'Edit' && isset($url['id'])) {
         $list = GetList($url['id']);
-        if($list == false) {
+        if ($list == false) {
             // id bestaat niet in tabel list
             die('dat id bestaat niet');
         }
 
-        render("ListEdit", ["list"=>$list]);
+        render("ListEdit", ["list" => $list]);
     }
 
-    if ($_SERVER['REQUEST_METHOD'] === 'GET' && $url['controller'] == 'Task' && $url['action'] == 'Edit' && isset($url['id']) ) {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET' && $url['controller'] == 'Task' && $url['action'] == 'Edit' && isset($url['id'])) {
         $task = GetTask($url['id']);
-        if($task == false) {
+        if ($task == false) {
             // id bestaat niet in tabel list
             die('dat id bestaat niet');
         }
 
-        render("TaskEdit", ["task"=>$task]);
+        render("TaskEdit", ["task" => $task]);
     }
 
     // ----------------- Add -----------------
@@ -80,13 +80,33 @@ if (isset($_GET['url'])) {
 
     // ----------------- Delete -----------------
 
-    if ($_SERVER['REQUEST_METHOD'] === 'GET' && $url['controller'] == 'Task' && $url['action'] == 'Delete' && isset($url['id']) ) {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET' && $url['controller'] == 'Task' && $url['action'] == 'Delete' && isset($url['id'])) {
         TaskDelete($url['id']);
         header('Location: ' . $redirect_to);
     }
 
-    if ($_SERVER['REQUEST_METHOD'] === 'GET' && $url['controller'] == 'List' && $url['action'] == 'Delete' && isset($url['id']) ) {
-        ListDelete($url['id']);
+    if ($_SERVER['REQUEST_METHOD'] === 'GET' && $url['controller'] == 'List' && $url['action'] == 'Delete' && isset($url['id'])) {
+        $tasks = GetTasksFromList($url['id']);
+        $closed = 0;
+        $open = 0;
+
+        foreach ($tasks as $task) {
+            if ($task['status'] === 'closed') {
+                $closed++;
+            } else if ($task['status'] === 'open') {
+                $open++;
+            }
+        }
+
+        $total = $closed + $open;
+
+        if ($total === $closed) {
+            ListDelete($url['id']);
+        } else {
+            $msg = "Close all tasks before deleting this list.";
+            showErrorMessage($msg);
+        }
+
         header('Location: ' . $redirect_to);
     }
 

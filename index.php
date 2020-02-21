@@ -42,28 +42,39 @@
 
         <div class="p-3">
             <h1>Lists and tasks</h1>
-            <?php $tasks = getAllTasks();
-            foreach ($lists as $list) { ?>
-                <hr>
-                <button class="accordion"><?= $list['list_name'] ?>
-                    <a type="button" href="route.php?url=List/Edit/<?= $list['id'] ?>">Edit</a>
-                    <a type="button" href="route.php?url=List/Delete/<?= $list['id'] ?>">Delete</a></button>
-                <div class="panel" style="display: none">
-                    <?php
+            <table id="myTable" class="table table-striped table-dark">
 
-                    foreach ($tasks as $task) {
-                        if ($list['id'] === $task['list_id']) {
-                            ?>
-                            <p><?= $task['task_name'] ?> <a type="button"
-                                                            href="route.php?url=Task/Edit/<?= $task['id'] ?>">Edit</a>
-                                <a type="button" href="route.php?url=Task/Delete/<?= $task['id'] ?>">Delete</a></p>
+                <tr>
+                    <th scope="col" onclick="sortTable(0)">List</th>
+                    <th scope="col" onclick="sortTable(1)">Task</th>
+                    <th scope="col" onclick="sortTable(2)">Status</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                <?php $tasks = getAllTasks();
+                if (!empty($tasks)) {
+                    foreach ($tasks as $task) { ?>
+                        <tr>
+                            <td><?= $task['list_name'] ?>
+                                <a type="button" href="route.php?url=List/Edit/<?= $task['list_id'] ?>">Edit</a>
+                                <a type="button" href="route.php?url=List/Delete/<?= $task['list_id'] ?>">Delete</a>
+                            </td>
+                            <td><?= $task['task_name'] ?></td>
+                            <td><?= $task['status'] ?></td>
+                            <td><a type="button" href="route.php?url=Task/Edit/<?= $task['id'] ?>">Edit</a></td>
+                            <td><a type="button" href="route.php?url=Task/Delete/<?= $task['id'] ?>">Delete</a></td>
+                        </tr>
+                    <?php }
+                } else { ?>
+                    <tr>
+                        <th scope="col">None</th>
+                        <th scope="col">None</th>
+                        <th scope="col">None</th>
+                        <th scope="col">None</th>
+                    </tr>
+                <?php } ?>
+            </table>
 
-                            <?php
-                        }
-                    }
-                    ?>
-                </div>
-            <?php } ?>
             <script>
                 var acc = document.getElementsByClassName("accordion");
                 var i;

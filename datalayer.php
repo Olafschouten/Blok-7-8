@@ -139,14 +139,21 @@ WHERE id=:id');
 
 // ----------------- Get specific tasks -----------------
 
-function GetTaskFromList($id)
+function GetTasksFromList($id)
 {
     $conn = dbConnect();
     $query = $conn->prepare('
 SELECT * 
 FROM task 
-WHERE lists_id=:lists_id');
-    $query->execute([':lists_id' => $id]);
+WHERE list_id=:list_id');
+    $query->execute([':list_id' => $id]);
     $conn = null;
     return $query->fetchAll();
+}
+
+// ----------------- Error message -----------------
+
+function showErrorMessage($msg)
+{
+    echo '<script type="javascript">alert("' . $msg . '")</script>';
 }
