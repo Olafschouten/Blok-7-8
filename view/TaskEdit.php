@@ -23,11 +23,11 @@
                 </select></p>
             <?php $lists = GetAllLists();
 
-            $listName = GetList($task['list_id']) ?>
+            $listName = GetList($task['list_id']); ?>
             <p>In list: <select name="list_id" required>
                     <option value="<?php echo $listName['id']; ?>"><?php echo $listName['list_name']; ?></option>
                     <?php foreach ($lists as $list) {
-                        if (!$listName === $list) {
+                        if ($listName['list_name'] != $list['list_name']) {
                             ?><option value="<?php echo $list['id']; ?>"><?php echo $list['list_name']; ?></option><?php
                         }
                     } ?>
