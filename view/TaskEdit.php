@@ -32,6 +32,8 @@
                         }
                     } ?>
                 </select></p>
+            <p>Description: <input name="description" type="text" value="<?= $task['description'] ?>" required></p>
+            <p>Time: <input name="time" type="text" value="<?= $task['time'] ?>" required></p>
         </label>
         <input type="submit" value="Edit"/>
     </form>

@@ -21,9 +21,9 @@ function getAllTasks()
 {
     $conn = dbConnect();
     $query = $conn->prepare("
-SELECT task.list_id, lists.list_name, task.task_name, task.status, task.id
+SELECT task.list_id, lists.list_name, task.task_name, task.status, task.id, task.description, task.time
 FROM task
-INNER JOIN lists
+JOIN lists
 ON task.list_id = lists.id");
     $query->execute();
     $conn = null;
@@ -48,8 +48,8 @@ function TaskInsert($data)
 {
     $conn = dbConnect();
     $query = $conn->prepare("
-INSERT INTO task (task_name, status, list_id) 
-VALUES (:task_name, :status, :list_id)");
+INSERT INTO task (task_name, status, list_id, description, time) 
+VALUES (:task_name, :status, :list_id, :description, :time)");
 //    '".implode("','", $data)."'
     $query->execute($data);
     $conn = null;

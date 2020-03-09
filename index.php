@@ -34,6 +34,8 @@
                             <option value="<?php echo $list['id']; ?>"><?php echo $list['list_name']; ?></option>
                         <?php } ?>
                     </select></p>
+                <p>Description: <input name="description" type="text" placeholder="Description" required></p>
+                <p>Time: <input name="time" type="text" placeholder="Time" required></p>
             </label>
             <input type="submit" value="Add"/>
         </form>
@@ -48,6 +50,8 @@
                     <th scope="col" onclick="sortTable(0)">List</th>
                     <th scope="col" onclick="sortTable(1)">Task</th>
                     <th scope="col" onclick="sortTable(2)">Status</th>
+                    <th scope="col" onclick="sortTable(3)">Description</th>
+                    <th scope="col" onclick="sortTable(4)">Time</th>
                     <th scope="col">Edit</th>
                     <th scope="col">Delete</th>
                 </tr>
@@ -61,6 +65,8 @@
                             </td>
                             <td><?= $task['task_name'] ?></td>
                             <td><?= $task['status'] ?></td>
+                            <td><?= $task['description'] ?></td>
+                            <td><?= $task['time'] ?></td>
                             <td><a type="button" href="route.php?url=Task/Edit/<?= $task['id'] ?>">Edit</a></td>
                             <td><a type="button" href="route.php?url=Task/Delete/<?= $task['id'] ?>">Delete</a></td>
                         </tr>
@@ -71,26 +77,15 @@
                         <th scope="col">None</th>
                         <th scope="col">None</th>
                         <th scope="col">None</th>
+                        <th scope="col">None</th>
+                        <th scope="col">None</th>
                     </tr>
                 <?php } ?>
             </table>
 
             <script>
-                var acc = document.getElementsByClassName("accordion");
-                var i;
 
-                for (i = 0; i < acc.length; i++) {
-                    acc[i].addEventListener("click", function () {
-                        this.classList.toggle("active");
-                        var panel = this.nextElementSibling;
-                        if (panel.style.display === "block") {
-                            panel.style.display = "none";
-                        } else {
-                            panel.style.display = "block";
-                        }
-                    });
-                }
-
+                // Sort list by td items on table elements
                 function sortTable(n) {
                     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
                     table = document.getElementById("myTable");
