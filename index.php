@@ -35,7 +35,7 @@
                         <?php } ?>
                     </select></p>
                 <p>Description: <input name="description" type="text" placeholder="Description" required></p>
-                <p>Time: <input name="time" type="text" placeholder="Time" required></p>
+                <p>Time: <input name="time" type="text" placeholder="Time in minutes" required></p>
             </label>
             <input type="submit" value="Add"/>
         </form>
@@ -66,7 +66,7 @@
                             <td><?= $task['task_name'] ?></td>
                             <td><?= $task['status'] ?></td>
                             <td><?= $task['description'] ?></td>
-                            <td><?= $task['time'] ?></td>
+                            <td><?= $task['time'] ?> minutes</td>
                             <td><a type="button" href="route.php?url=Task/Edit/<?= $task['id'] ?>">Edit</a></td>
                             <td><a type="button" href="route.php?url=Task/Delete/<?= $task['id'] ?>">Delete</a></td>
                         </tr>
