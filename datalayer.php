@@ -87,6 +87,15 @@ WHERE id = :id");
     $conn = null;
 }
 
+function ListTasksDelete($id) {
+    $conn = dbConnect();
+    $query = $conn->prepare("
+DELETE FROM task
+WHERE list_id = :id");
+    $query->execute([':id' => $id]);
+    $conn = null;
+}
+
 // ----------------- Get -----------------
 
 function GetList($id)
@@ -131,9 +140,9 @@ function TaskUpdate($data)
     $conn = dbConnect();
     $query = $conn->prepare('
 UPDATE task 
-SET task_name = :task_name 
+SET task_name = :task_name, status = :status, description = :description, time = :time
 WHERE id=:id');
-    $query->execute([':task_name' => $data['task_name'], ':id' => $data['id']]);
+    $query->execute([':task_name' => $data['task_name'], ':status' => $data['status'], ':description' => $data['description'], ':time' => $data['time'], ':id' => $data['id']]);
     $conn = null;
 }
 

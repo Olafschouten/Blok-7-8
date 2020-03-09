@@ -102,6 +102,7 @@ if (isset($_GET['url'])) {
 
         if ($total === $closed) {
             ListDelete($url['id']);
+            ListTasksDelete($url['id']);
         } else {
             $msg = "Close all tasks before deleting this list.";
             showErrorMessage($msg);
